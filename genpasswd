@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NCHAR=8
+
+if [ "$1" == "-h" ]; then
+	PRG=$(basename "$0")
+	echo "Usage: $PRG [nchar]"
+	echo "Default nchar = $NCHAR"
+	exit 0
+fi
+
+if [ -n "$1" ]; then
+	NCHAR=$1
+fi
+
+head -c"$NCHAR" /dev/random | uuencode -m - | grep -v '^begin\|^===' | sed 's/==$//'
+
+exit 0
+

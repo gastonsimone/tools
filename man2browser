@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -n "$2" ]; then
+	SECTION=$1
+	NAME=$2
+else
+	NAME=$1
+fi
+
+TEMPFILE="/tmp/$(basename $0).$NAME.$SECTION.$$.html"
+
+man $SECTION $NAME | man2html > $TEMPFILE
+
+open $TEMPFILE
+
+exit 0
+

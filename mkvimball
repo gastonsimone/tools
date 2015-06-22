@@ -1,0 +1,15 @@
+#!/bin/sh
+
+TMP_LIST=vimballfiles.lst
+COMPRESS=zip
+
+BALLNAME=$1
+if [ -z "$BALLNAME" ]; then
+	BALLNAME=$(basename "$(pwd)")
+fi
+
+find ./* -type f -not -name 'tags' -not -name '*.md' > $TMP_LIST
+sed -e 's/^\.\///' -i '' $TMP_LIST
+vim -c "%MkVimball! $BALLNAME ." -c 'q!' $TMP_LIST
+$COMPRESS "$BALLNAME.$COMPRESS" "$BALLNAME.vmb"
+rm -f "$BALLNAME.vmb" "$TMP_LIST"
